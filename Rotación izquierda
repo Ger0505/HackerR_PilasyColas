@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <math.h>  
+#include <stdlib.h>
+#include <string.h>
+#define Nodo struct nodo 
+Nodo{
+    int dato;
+    Nodo *siguiente;
+};
+
+Nodo *inicio=NULL;
+Nodo *final=NULL;
+
+void insertar(int dato);
+Nodo *nuevoNodo(int dato);
+void leftRecorrer();
+void recorrido();
+
+int main(){
+    int n,d,i,a;
+    do{
+        scanf("%i %i",&n,&d);
+    }while(n<1 | n>pow(10,5) | d<1 | d>n);
+    for(i=0;i<n;i++){
+        do{
+            scanf("%i",&a);
+        }while(a<1 | a>pow(10,6));
+        insertar(a);
+    }
+    for(i=0;i<d;i++){
+        leftRecorrer();
+    }    
+    recorrido();
+    return 1;
+} 
+void insertar(int dato){
+    Nodo *nuevo= nuevoNodo(dato);
+    if(inicio==NULL){
+        inicio=nuevo;
+        final=nuevo;
+    }else{
+        final->siguiente=nuevo;
+        nuevo->siguiente=NULL;
+        final=nuevo;
+    }
+}
+Nodo *nuevoNodo(int dato){
+    Nodo *nuevo=(Nodo*)malloc(sizeof(Nodo));
+    nuevo->dato = dato;
+    nuevo->siguiente=NULL;
+    return nuevo;
+}
+void leftRecorrer(){
+    if(inicio!=NULL && inicio->siguiente!=NULL){
+        Nodo *aux=inicio;
+        inicio=inicio->siguiente;
+        final->siguiente=aux;
+        aux->siguiente=NULL;
+        final=aux;
+    }
+}
+void recorrido(){
+    Nodo*actual=inicio;
+        while(actual!=NULL){
+           printf("%i ",actual->dato);
+           actual=actual->siguiente;
+        }
+}
